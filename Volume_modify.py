@@ -7,7 +7,7 @@ volume_describe = aws_client.describe_volumes()
 
 for volume in volume_describe["Volumes"]:
     all_volume_id = volume["VolumeId"]
-    if volume["Size"] == "50":
+    if volume["Size"] <= "50":
         if volume["VolumeType"] == "gp2":
             volume_id = volume["VolumeId"]
             print(volume_id)
@@ -19,4 +19,4 @@ for volume in volume_describe["Volumes"]:
         else:
             print(f"Already volume {all_volume_id} is gp3 only")
     else:
-        print(f"This Volume id {all_volume_id} is more than 50 GB")
+        print(f"This Volume id {all_volume_id} is more than 50 GiB")
