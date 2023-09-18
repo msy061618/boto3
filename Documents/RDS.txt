@@ -1,0 +1,32 @@
+#user Creation
+CREATE USER user_name WITH PASSWORD 'your_password';
+
+#access to database
+GRANT CONNECT ON DATABASE db_name TO user_name;
+
+#Usage to this Db
+GRANT USAGE ON SCHEMA vo_sit to user_name;
+
+#schema all table access
+GRANT SELECT ON ALL TABLES IN SCHEMA vo_sit TO user_name;
+
+#revoke access
+REVOKE INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA vo_sit FROM user_name;
+
+#Grant access
+GRANT INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA vo_sit FROM user_name;
+
+SELECT vo_sit FROM Information_schema.schemata;
+
+#connection to psql.
+psql -h endpoing -p 5432 -U user_name -d db_name
+
+#clear_screen
+\! clear
+
+SELECT grantee, privilege_type FROM information_schema.role_table_grants WHERE table_name = 'table_name_yours';
+
+SELECT * FROM sh_event_details;
+
+#Grant all privileges on the database:
+GRANT ALL PRIVILEGES ON DATABASE sh_vo TO db_inquiry;
