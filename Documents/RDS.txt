@@ -29,4 +29,4 @@ SELECT grantee, privilege_type FROM information_schema.role_table_grants WHERE t
 SELECT * FROM sh_event_details;
 
 #Grant all privileges on the database:
-GRANT ALL PRIVILEGES ON DATABASE sh_vo TO db_inquiry;
+GRANT ALL PRIVILEGES ON DATABASE db_name TO db_inquiry;
