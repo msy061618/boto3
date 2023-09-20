@@ -77,4 +77,4 @@ df.to_excel(excel_writer,sheet_name="Sheet1", index=False)
 
 excel_writer.close()
 
-print("Data Succesfully Take")
+print("Data Successfully Taken")
