@@ -19,11 +19,28 @@ for instances in ec2_resources["Reservations"]:
         Instance_tags = instance_info["Tags"]
         Instance_platform = instance_info["PlatformDetails"]
         #print(Instance_tags)
-        for tag in Instance_tags:
+        for tag in Instance_tags:            
             if tag["Key"] == "Project":
-                Project_tag = tag["Value"]
+                Project_tags = tag["Value"]
+                #project_tag = Project_tags
             elif tag["Key"] == "Name":
-                Name_tag = tag["Value"]
+                name_tags = tag["Value"]
+                #name_tag = name_tags
+                print(name_tags)
+            try:
+                project_tag = Project_tags
+                print(project_tag)                
+            except NameError:
+                project_tag = None
+                
+            try:
+                name_tag = name_tags
+                #print(name_tag)            
+            except NameError:
+                name_tag = None
+
+
+            
         State = instance_info["State"]["Name"]
 
         volume_describe = aws_client.describe_volumes() 
@@ -39,14 +56,14 @@ for instances in ec2_resources["Reservations"]:
                         Root_Volume_Type = volume["VolumeType"]
 
                         ec2_instace = {
-                            "Instance_Name" : Name_tag,
+                            "Instance_Name" : name_tag,
                             "Private_Ip" : Instance_PrivateIp,
                             "Instance_Id" : Instance_Id,
                             "RootVolumeId" : Root_volume_ID,
                             "InstanceType" : Instance_type,
                             "Keypair" : Instance_keyPair,
                             "Platform" : Instance_platform,
-                            "Project" : Project_tag,
+                            "Project" : project_tag,
                             "Root_Volume_size" : Root_volume_size,
                             "Volume_type" : Root_Volume_Type
                             }
@@ -59,3 +76,5 @@ excel_writer = pd.ExcelWriter('Ec2Details.xlsx', engine='xlsxwriter')
 df.to_excel(excel_writer,sheet_name="Sheet1", index=False)
 
 excel_writer.close()
+
+print("Data Succesfully Take")
