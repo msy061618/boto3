@@ -21,7 +21,6 @@ for volume in volume_describe["Volumes"]:
         "Volume_Size" : volume["Size"],
         "Volume_Type" : volume["VolumeType"],
         "Volume_Iops" : volume["Iops"],
-        "Volume_Tags" : volume["Tags"][0]["Value"]
         }
         volumes_details_list.append(volumes_details)
     else:
