@@ -18,16 +18,26 @@ for instances in ec2_resources["Reservations"]:
         Instance_platform = instance_info["PlatformDetails"]
         
         for tag in Instance_tags:                
-            if tag["Key"] == "Project" or "project":
+            if tag["Key"] == "Project":
+                Project_tags = tag["Value"]                
+                
+            elif tag["Key"] == "project":
                 Project_tags = tag["Value"]
+                
             else:
-                Project_tags = "NO Project Name Assigned" 
+                Project_tags = "NO Project Tag Assigned" 
+                #print(Project_tags)
             
         for tag_name in Instance_tags:
             if tag_name["Key"] == "Name":
                 name_tags = tag_name["Value"]
+                # print(name_tags)
+                break
             else:
-                name_tags = name_tags
+                name_tags = "No Name Tag Assigned"
+                # print(name_tags)
+                break
+
         State = instance_info["State"]["Name"]
 
         volume_describe = aws_client.describe_volumes() 
@@ -55,6 +65,8 @@ for instances in ec2_resources["Reservations"]:
                             "Volume_type" : Root_Volume_Type
                             }
                         ec2_complete_details.append(ec2_instace)
+
+
 df = pd.DataFrame(ec2_complete_details)
 
 excel_writer = pd.ExcelWriter('Ec2Details.xlsx', engine='xlsxwriter')
