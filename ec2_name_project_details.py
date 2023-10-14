@@ -45,16 +45,16 @@ for instance_tag_details in ec2_services_complete_list:
         for ec2_tag in tag:
             if ec2_tag["Key"] == "Name":
                 name_details = {
-                "Ec2_Name" : ec2_tag["Value"],
-                "Name_instancID" : name_instance_id
+                "Name_instancID" : name_instance_id,
+                "Ec2_Name" : ec2_tag["Value"]                
                 }
                 print(name_details)
                 name_tag_list.append(name_details)
 
             elif ec2_tag["Key"] == "Project" or "project":
                 project_details = {
-                "Project_Name" : ec2_tag["Value"],
-                "project_instance_id" : name_instance_id
+                "Project_instance_id" : name_instance_id,
+                "Project_Name" : ec2_tag["Value"]
                 }
                 print(project_details)
                 project_tag_list.append(project_details)           
