@@ -36,7 +36,7 @@ for target in response1["TargetGroups"]:
             "ELB_ARN" : target["LoadBalancerArns"],
             "Instance_Id": Instance_ID
         }
-        print(target_dtatils)
+        # print(target_dtatils)
         target_list.append(target_dtatils)
 
 classic_response = aws_client_elb.describe_load_balancers()
@@ -50,7 +50,7 @@ for i in classic_response["LoadBalancerDescriptions"]:
         "LoadBalancerPort" : i["ListenerDescriptions"][0]["Listener"]["LoadBalancerPort"],
         "InstancePort" : i["ListenerDescriptions"][0]["Listener"]["InstancePort"]
         }
-        print(classic_elb)
+        # print(classic_elb)
         classic_elb_list.append(classic_elb)
 
 df = pd.DataFrame(elb_list)
@@ -64,3 +64,5 @@ df1.to_excel(excel_writer,sheet_name="tg_details", index=False)
 df2.to_excel(excel_writer,sheet_name="clb_details", index=False)
 
 excel_writer.close()
+
+print("success")
