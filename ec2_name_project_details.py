@@ -15,13 +15,13 @@ choice = input("Enter the number of your choice: ")
 
 # Check the user's choice
 if choice == "1":
-    profile = "SH-PROD"
+    profile = "profile1"
 elif choice == "2":
-    profile = "SH-DEV"
+    profile = "profile2"
 elif choice == "3":
-    profile = "SH-SIT"
+    profile = "profile3"
 elif choice == "4":
-    profile = "SH-UAT"
+    profile = "profile4"
 else:
     print("Invalid choice. Please select a valid option.")
 
