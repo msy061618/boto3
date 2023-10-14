@@ -11,31 +11,38 @@ ec2_list = []
 name_list = []
 project_list = []
 
-for instances_Name_tag in ec2_resources["Reservations"]:
-    for instance_info in instances_Name_tag["Instances"]:
-        instance_infor = instance_info
-        ec2_complete_details.append(instance_infor)
-        ec2_asset = {
-        "Instance_Id" : instance_info["InstanceId"],
-        "Instance_type" : instance_info["InstanceType"],
-        "Instance_keyPair" : instance_info["KeyName"],
-        "Instance_PrivateIp" : instance_info["PrivateIpAddress"],      
-        "Instance_platform" : instance_info["PlatformDetails"],
-        "state" : instance_info["State"]["Name"]
-        }
-        ec2_list.append(ec2_asset)   
-                
+def ec2():
+    try:
+        for instances_Name_tag in ec2_resources["Reservations"]:
+            for instance_info in instances_Name_tag["Instances"]:
+                # print( instance_info)
+                ec2_asset = {
+                "Instance_Id" : instance_info["InstanceId"],
+                "Instance_type" : instance_info["InstanceType"],
+                "Instance_keyPair" : instance_info["KeyName"],
+                "Instance_PrivateIp" : instance_info["PrivateIpAddress"],      
+                "Instance_platform" : instance_info["PlatformDetails"],
+                "state" : instance_info["State"]["Name"]
+                }
+                # print(ec2_asset)
+                ec2_list.append(ec2_asset)
+    except KeyError as e:
+        print(e)
+
+ec2()
 
 for instances_project in ec2_resources["Reservations"]:
     for instance_info in instances_project["Instances"]:
-        Instance_Id = instance_info["InstanceId"]
+        # print(instance_info)
+        instance_infor = instance_info
+        ec2_complete_details.append(instance_infor)
         
 
 # print(ec2_complete_details)
 def name_tas():
     for i in ec2_complete_details:
         instance_id = i["InstanceId"]
-        priv_Ip = i["PrivateIpAddress"]
+        # priv_Ip = i["PrivateIpAddress"]
         
         # print(i["Tags"])
         for j in i["Tags"]:
@@ -44,7 +51,7 @@ def name_tas():
                 # print(value)
                 name_tags = {
                     "Instance_id" : instance_id,
-                    "Private_Ip" : priv_Ip,
+                    # "Private_Ip" : priv_Ip,
                     "Name_tags" : value
                 }
                 name_list.append(name_tags)
@@ -54,7 +61,7 @@ name_tas()
 def project_tags():
     for project in ec2_complete_details:
         instance_id_project = project["InstanceId"]
-        project_priv_ip = project["PrivateIpAddress"]
+        # project_priv_ip = project["PrivateIpAddress"]
         
         for ji in project["Tags"]:
             if ji["Key"] == "Project":
@@ -62,7 +69,7 @@ def project_tags():
                 # print(value_project)
                 project_tags_value = {
                     "Instance_id" : instance_id_project,
-                    "Private_Ip" : project_priv_ip,
+                    # "Private_Ip" : project_priv_ip,
                     "Project_tags" : value_project
                 }
                 # print(project_tags_value )
@@ -78,10 +85,10 @@ df = pd.DataFrame(ec2_list)
 df1 = pd.DataFrame(name_list)
 df2 = pd.DataFrame(project_list)
 
-excel_writer = pd.ExcelWriter('ec2.xlsx', engine='xlsxwriter')
+# excel_writer = pd.ExcelWriter('ec2.xlsx', engine='xlsxwriter')
 
-df.to_excel(excel_writer,sheet_name="ec2", index=False)
-df1.to_excel(excel_writer,sheet_name="name_tag", index=False)
-df2.to_excel(excel_writer,sheet_name="project_tag", index=False)
+# df.to_excel(excel_writer,sheet_name="ec2", index=False)
+# df1.to_excel(excel_writer,sheet_name="name_tag", index=False)
+# df2.to_excel(excel_writer,sheet_name="project_tag", index=False)
 
-excel_writer.close()
+# excel_writer.close()
