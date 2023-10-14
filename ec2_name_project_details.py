@@ -1,12 +1,38 @@
 import boto3
 import pandas as pd
+import datetime
+
+current_time = datetime.datetime.now().strftime('%I_%M_%p')
+
+print("Choose an option:")
+print("1. aws profile - prod")
+print("2. aws profile - dev")
+print("3. aws profile - sit")
+print("4. default")
+print("5. quit")
+
+choice = input("Enter the number of your choice: ")
+
+# Check the user's choice
+if choice == "1":
+    profile = "SH-PROD"
+elif choice == "2":
+    profile = "SH-DEV"
+elif choice == "3":
+    profile = "SH-SIT"
+elif choice == "4":
+    profile = "SH-UAT"
+else:
+    print("Invalid choice. Please select a valid option.")
+
+excelfile = f"ec2_deatils_{profile}_{datetime.date.today()}_{current_time}.xlsx"
 
 ec2_list = []
 name_tag_list = []
 project_tag_list = []
 
 
-aws_session = boto3.Session(profile_name="default", region_name="us-east-1")
+aws_session = boto3.Session(profile_name= profile, region_name="us-east-1")
 aws_client = aws_session.client(service_name="ec2")
 ec2_services_complete_list = []
 ec2_resources = aws_client.describe_instances()
@@ -62,13 +88,13 @@ for instance_tag_details in ec2_services_complete_list:
         print(f"{name_instance_id} is no tag")
 print("---------------------------------------------------------------------------------------------")
 
-# print(ec2_list)
+print(ec2_list)
 
 df = pd.DataFrame(ec2_list)
 df1 = pd.DataFrame(name_tag_list)
 df2 = pd.DataFrame(project_tag_list)
 
-excel_writer = pd.ExcelWriter('ec2.xlsx', engine='xlsxwriter')
+excel_writer = pd.ExcelWriter(excelfile, engine='xlsxwriter')
 
 df.to_excel(excel_writer,sheet_name="ec2", index=False)
 df1.to_excel(excel_writer,sheet_name="name_tag", index=False)
