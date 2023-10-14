@@ -8,9 +8,7 @@ project_tag_list = []
 
 aws_session = boto3.Session(profile_name="default", region_name="us-east-1")
 aws_client = aws_session.client(service_name="ec2")
-
 ec2_services_complete_list = []
-
 ec2_resources = aws_client.describe_instances()
 
 for instances_project in ec2_resources["Reservations"]:
@@ -47,15 +45,15 @@ for instance_tag_details in ec2_services_complete_list:
         for ec2_tag in tag:
             if ec2_tag["Key"] == "Name":
                 name_details = {
-                "name_tag" : ec2_tag["Value"],
-                "name_instancID" : name_instance_id
+                "Ec2_Name" : ec2_tag["Value"],
+                "Name_instancID" : name_instance_id
                 }
                 print(name_details)
                 name_tag_list.append(name_details)
 
-            elif ec2_tag["Key"] == "Project":
+            elif ec2_tag["Key"] == "Project" or "project":
                 project_details = {
-                "project_value" : ec2_tag["Value"],
+                "Project_Name" : ec2_tag["Value"],
                 "project_instance_id" : name_instance_id
                 }
                 print(project_details)
